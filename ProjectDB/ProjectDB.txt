@@ -1,0 +1,78 @@
+CREATE TABLE Card (
+    card_id SERIAL PRIMARY KEY,
+    codecard INT,
+    balance INT,
+    srok_card DATE,
+    birthday DATE,
+    phone INT UNIQUE NOT NULL
+);
+CREATE TABLE Suppliers (
+    supplier_id SERIAL PRIMARY KEY,
+    supplier_name VARCHAR(100),
+    supplier_phone INT,
+    supplier_address TEXT,
+    rating INT,
+    delivery_time INT
+);
+
+CREATE TABLE Clients(
+    client_id SERIAL PRIMARY KEY,
+    card_id INT,
+    full_name VARCHAR(255) NOT NULL,
+    FOREIGN KEY (card_id) REFERENCES Card(card_id)
+);
+CREATE TABLE Orders (
+    order_id SERIAL PRIMARY KEY,
+    client_id INT NOT NULL,
+    order_date DATE,
+    delivery_date DATE,
+    status VARCHAR(20),
+    delivery_type VARCHAR(20),
+    delivery_address TEXT,
+    notes TEXT,
+    FOREIGN KEY (client_id) REFERENCES Clients(client_id)
+);
+
+CREATE TABLE Categories (
+    category_id SERIAL PRIMARY KEY,
+    category_name VARCHAR(50),
+    description TEXT
+);
+
+CREATE TABLE Products (
+    product_id SERIAL PRIMARY KEY,
+    category_id INT,
+    supplier_id INT,
+    product_name VARCHAR(100),
+    price FLOAT,
+    description TEXT,
+    care_info TEXT,
+    is_available BOOLEAN DEFAULT (TRUE),
+    quantity INT DEFAULT (1),
+    FOREIGN KEY (category_id) REFERENCES Categories(category_id),
+    FOREIGN KEY (supplier_id) REFERENCES Suppliers(supplier_id)
+);
+
+CREATE TABLE Stock (
+    stock_id SERIAL PRIMARY KEY,
+    product_id INT,
+    quantity INT,
+    last_update DATE,
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+
+CREATE TABLE Order_Items (
+    order_item_id SERIAL PRIMARY KEY,
+    order_id INT,
+    product_id INT,
+    quantity INT,
+    FOREIGN KEY (order_id) REFERENCES Orders(order_id),
+    FOREIGN KEY (product_id) REFERENCES Products(product_id)
+);
+
+
+
+
+
+
