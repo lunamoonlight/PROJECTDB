@@ -1,7 +1,7 @@
 CREATE TABLE Card (
     card_id SERIAL PRIMARY KEY,
     codecard INT NOT NULL,
-    balance INT,
+    balance INT DEFAULT(0),
     srok_card DATE NOT NULL
 );
 CREATE TABLE Suppliers (
@@ -63,6 +63,7 @@ CREATE TABLE Order_Items (
     FOREIGN KEY (order_id) REFERENCES Orders(order_id),
     FOREIGN KEY (product_id) REFERENCES Products(product_id)
 );
+
 
 
 
